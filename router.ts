@@ -4,6 +4,6 @@ import carouselItemsController from './api/carouselItemsController';
 
 const router = Router();
 
-router.get('/', carouselItemsController.index);
+router.get('/carousel-items', carouselItemsController.index);
 
 export default router;
