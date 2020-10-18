@@ -5,6 +5,9 @@ import carouselItemsService from './carouselItemsService';
 const carouselItemsAdminController = {
   index: async (req: Request, res: Response) => {
     const carouselItems = await carouselItemsService.findAll('*');
+    const { length } = carouselItems;
+    res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
+    res.setHeader('Content-Range', `carousel-items 0-${length}/${length}`);
     res.send(carouselItems);
   },
   create: async (req: Request, res: Response) => {
