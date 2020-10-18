@@ -12,7 +12,7 @@ type CreateParams = {
 };
 
 const carouselItemsService = {
-  findAll: async (fields: Array<string> | string) => {
+  findAll: async (fields: string | string[]): Promise<any[]> => {
     const carouselItems = await db(TABLE_NAME).select(fields);
     return carouselItems;
   },
@@ -21,8 +21,8 @@ const carouselItemsService = {
     description,
     pictureUrl,
     destinationUrl,
-  }: CreateParams) => {
-    const carouselItem = await db(TABLE_NAME)
+  }: CreateParams): Promise<any> => {
+    const [carouselItem] = await db(TABLE_NAME)
       .insert({ id: uuidv4(), title, description, pictureUrl, destinationUrl })
       .returning('*');
     return carouselItem;
