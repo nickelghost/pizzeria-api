@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 import router from './router';
@@ -11,6 +12,7 @@ const config = {
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use('/', router);
 
 app.listen(config.port, () => console.log(`Listening on :${config.port}`));
