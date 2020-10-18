@@ -4,6 +4,7 @@ exports.up = function (knex) {
     table.string('title').notNullable();
     table.string('description');
     table.string('pictureUrl').notNullable();
+    table.string('pictureKey').notNullable();
     table.string('destinationUrl');
     table.timestamp('createdAt').notNullable().defaultTo(knex.fn.now());
     table.timestamp('updatedAt').notNullable().defaultTo(knex.fn.now());

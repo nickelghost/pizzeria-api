@@ -10,12 +10,15 @@ const carouselItemsAdminController = {
   create: async (req: Request, res: Response) => {
     const { title, description, pictureString, destinationUrl } = req.body;
     const uploader = new S3Uploader();
-    const { url: pictureUrl } = await uploader.add(pictureString);
+    const { url: pictureUrl, key: pictureKey } = await uploader.add(
+      pictureString,
+    );
     const carouselItem = await carouselItemsService.create({
       title,
       description,
-      destinationUrl,
       pictureUrl,
+      pictureKey,
+      destinationUrl,
     });
     res.send(carouselItem);
   },

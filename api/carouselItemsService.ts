@@ -8,6 +8,7 @@ type CreateParams = {
   title: string;
   description?: string;
   pictureUrl: string;
+  pictureKey: string;
   destinationUrl?: string;
 };
 
@@ -20,10 +21,18 @@ const carouselItemsService = {
     title,
     description,
     pictureUrl,
+    pictureKey,
     destinationUrl,
   }: CreateParams): Promise<any> => {
     const [carouselItem] = await db(TABLE_NAME)
-      .insert({ id: uuidv4(), title, description, pictureUrl, destinationUrl })
+      .insert({
+        id: uuidv4(),
+        title,
+        description,
+        pictureUrl,
+        pictureKey,
+        destinationUrl,
+      })
       .returning('*');
     return carouselItem;
   },
