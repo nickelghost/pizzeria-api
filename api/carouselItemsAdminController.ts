@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { S3Uploader } from '../lib/uploader/s3';
 import carouselItemsService from './carouselItemsService';
 
 const carouselItemsAdminController = {
@@ -8,11 +9,13 @@ const carouselItemsAdminController = {
   },
   create: async (req: Request, res: Response) => {
     const { title, description, pictureString, destinationUrl } = req.body;
+    const uploader = new S3Uploader();
+    const { url: pictureUrl } = await uploader.add(pictureString);
     const carouselItem = await carouselItemsService.create({
       title,
       description,
       destinationUrl,
-      pictureUrl: 'https://example.com/picture.jpg',
+      pictureUrl,
     });
     res.send(carouselItem);
   },
