@@ -1,20 +1,12 @@
 import { Request, Response } from 'express';
 import carouselItemsService from './carouselItemsService';
 
+const FIELDS = ['title', 'description', 'pictureUrl', 'destinationUrl'];
+
 const carouselItemsController = {
   index: async (req: Request, res: Response) => {
-    const carouselItems = await carouselItemsService.findAll();
+    const carouselItems = await carouselItemsService.findAll(FIELDS);
     res.send(carouselItems);
-  },
-  create: async (req: Request, res: Response) => {
-    const { title, description, pictureString, destinationUrl } = req.body;
-    const carouselItem = await carouselItemsService.create({
-      title,
-      description,
-      destinationUrl,
-      pictureUrl: 'https://example.com/picture.jpg',
-    });
-    res.send(carouselItem);
   },
 };
 

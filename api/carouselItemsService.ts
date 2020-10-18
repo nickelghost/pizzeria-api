@@ -12,8 +12,8 @@ type CreateParams = {
 };
 
 const carouselItemsService = {
-  findAll: async () => {
-    const carouselItems = await db(TABLE_NAME).select('*');
+  findAll: async (fields: Array<string> | string) => {
+    const carouselItems = await db(TABLE_NAME).select(fields);
     return carouselItems;
   },
   create: async ({
