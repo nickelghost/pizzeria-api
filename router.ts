@@ -9,5 +9,9 @@ router.get('/carousel-items', carouselItemsController.index);
 
 router.get('/admin/carousel-items', carouselItemsAdminController.index);
 router.post('/admin/carousel-items', carouselItemsAdminController.create);
+router.delete(
+  '/admin/carousel-items/:id',
+  carouselItemsAdminController.destroy,
+);
 
 export default router;

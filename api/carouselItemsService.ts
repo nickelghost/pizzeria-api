@@ -36,6 +36,14 @@ const carouselItemsService = {
       .returning('*');
     return carouselItem;
   },
+  destroy: async (id: string): Promise<any> => {
+    const [carouselItem] = await db(TABLE_NAME)
+      .where({ id })
+      .first()
+      .del()
+      .returning('*');
+    return carouselItem;
+  },
 };
 
 export default carouselItemsService;

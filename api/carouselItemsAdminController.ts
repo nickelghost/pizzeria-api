@@ -25,6 +25,11 @@ const carouselItemsAdminController = {
     });
     res.send(carouselItem);
   },
+  destroy: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const carouselItem = await carouselItemsService.destroy(id);
+    res.send(carouselItem);
+  },
 };
 
 export default carouselItemsAdminController;
