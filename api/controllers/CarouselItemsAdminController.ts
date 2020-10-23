@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 
 import { S3Uploader } from '../lib/uploader/s3';
+import Uploader from '../lib/uploader/uploader';
 import CarouselItemsService from '../services/CarouselItemsService';
 
 class CarouselItemsAdminController {
   service = new CarouselItemsService();
+  uploader: Uploader = new S3Uploader();
 
   index = async (req: Request, res: Response) => {
     const carouselItems = await this.service.findAll('*');
@@ -16,8 +18,7 @@ class CarouselItemsAdminController {
 
   create = async (req: Request, res: Response) => {
     const { title, description, pictureString, destinationUrl } = req.body;
-    const uploader = new S3Uploader();
-    const { url: pictureUrl, key: pictureKey } = await uploader.add(
+    const { url: pictureUrl, key: pictureKey } = await this.uploader.add(
       pictureString,
     );
     const carouselItem = await this.service.create({
