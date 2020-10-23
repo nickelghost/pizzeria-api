@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import setContentRangeHeader from '../lib/setContentRangeHeader';
 import { S3Uploader } from '../lib/uploader/s3';
 import Uploader from '../lib/uploader/uploader';
 import CarouselItemsService from '../services/CarouselItemsService';
@@ -11,8 +12,7 @@ class CarouselItemsAdminController {
   index = async (req: Request, res: Response) => {
     const carouselItems = await this.service.findAll('*');
     const { length } = carouselItems;
-    res.setHeader('Access-Control-Expose-Headers', 'Content-Range');
-    res.setHeader('Content-Range', `carousel-items 0-${length}/${length}`);
+    setContentRangeHeader(res, 0, length, length);
     res.send(carouselItems);
   };
 
