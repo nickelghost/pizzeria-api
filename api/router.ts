@@ -1,7 +1,10 @@
 import { Router } from 'express';
 
-import carouselItemsController from './api/carouselItemsController';
-import carouselItemsAdminController from './api/carouselItemsAdminController';
+import CarouselItemsController from './controllers/CarouselItemsController';
+import CarouselItemsAdminController from './controllers/CarouselItemsAdminController';
+
+const carouselItemsController = new CarouselItemsController();
+const carouselItemsAdminController = new CarouselItemsAdminController();
 
 const router = Router();
 

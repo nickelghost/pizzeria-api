@@ -15,7 +15,7 @@ const s3 = new AWS.S3({
 });
 
 export class S3Uploader implements Uploader {
-  async add(file: string) {
+  add = async (file: string) => {
     const buff = Buffer.from(file, 'base64');
     const mime = await FileType.fromBuffer(buff);
     const params: AWS.S3.PutObjectRequest = {
@@ -30,6 +30,6 @@ export class S3Uploader implements Uploader {
       key: res.Key,
       url: res.Location,
     };
-  }
-  async remove(url: string) {}
+  };
+  remove = async (url: string) => {};
 }

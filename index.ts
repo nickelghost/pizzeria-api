@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import config from './config';
-import router from './router';
+import config from './api/config';
+import router from './api/router';
 
 const app = express();
 
