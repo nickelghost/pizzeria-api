@@ -1,5 +1,3 @@
-import { DateTime } from 'aws-sdk/clients/devicefarm';
-
 type CarouselItem = {
   id: string;
   title: string;
@@ -7,8 +5,8 @@ type CarouselItem = {
   pictureUrl: string;
   pictureKey: string;
   destinationUrl?: string;
-  createdAt: DateTime;
-  updatedAt: DateTime;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export default CarouselItem;
