@@ -17,9 +17,9 @@ class CarouselItemsAdminController {
   };
 
   create = async (req: Request, res: Response) => {
-    const { title, description, pictureString, destinationUrl } = req.body;
+    const { title, description, picture, destinationUrl } = req.body;
     const { url: pictureUrl, key: pictureKey } = await this.uploader.add(
-      pictureString,
+      picture,
     );
     const carouselItem = await this.service.create({
       title,
