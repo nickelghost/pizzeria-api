@@ -39,21 +39,22 @@ class CarouselItemsAdminController {
       return next();
     }
     const { title, description, picture, destinationUrl } = req.body;
+    let carouselItem: CarouselItem;
     try {
       const { url: pictureUrl, key: pictureKey } = await this.uploader.add(
         picture,
       );
-      const carouselItem = await this.service.create({
+      carouselItem = await this.service.create({
         title,
         description,
         pictureUrl,
         pictureKey,
         destinationUrl,
       });
-      res.send(carouselItem);
     } catch (e) {
       return next(e);
     }
+    res.send(carouselItem);
   };
 
   destroy = async (req: Request, res: Response, next: NextFunction) => {
