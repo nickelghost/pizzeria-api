@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as yup from 'yup';
+import Joi from 'joi';
 
 import setContentRangeHeader from '../lib/setContentRangeHeader';
 import { S3Uploader } from '../lib/uploader/s3';
@@ -8,12 +8,19 @@ import CarouselItem from '../models/CarouselItem';
 import CarouselItemsService from '../services/CarouselItemsService';
 
 const schemas = {
-  create: yup.object().shape({
-    title: yup.string().required(),
-    description: yup.string(),
-    picture: yup.string().required(),
-    destinationUrl: yup.string(),
+  create: Joi.object({
+    title: Joi.string().required(),
+    description: Joi.string(),
+    picture: Joi.string().required(),
+    destinationUrl: Joi.string(),
   }),
+};
+
+type CreateRequestBody = {
+  title: string;
+  description?: string;
+  picture: string;
+  destinationUrl?: string;
 };
 
 class CarouselItemsAdminController {
@@ -33,12 +40,20 @@ class CarouselItemsAdminController {
   };
 
   create = async (req: Request, res: Response, next: NextFunction) => {
-    const reqValid = await schemas.create.isValid(req.body);
-    if (!reqValid) {
-      res.status(400).send();
+    let form: CreateRequestBody;
+    try {
+      form = await schemas.create.validateAsync(req.body);
+    } catch (e) {
+      const { message } = e.details[0];
+      res.status(400).send({ message });
       return next();
     }
-    const { title, description, picture, destinationUrl } = req.body;
+    const {
+      title,
+      description,
+      picture,
+      destinationUrl,
+    }: CreateRequestBody = form;
     let carouselItem: CarouselItem;
     try {
       const { url: pictureUrl, key: pictureKey } = await this.uploader.add(
