@@ -18,6 +18,7 @@ export class S3Uploader implements Uploader {
   add = async (file: string) => {
     const buff = Buffer.from(file, 'base64');
     const mime = await FileType.fromBuffer(buff);
+    if (!mime) throw new Error('Could not read file mime type');
     const params: AWS.S3.PutObjectRequest = {
       ACL: 'public-read',
       Body: buff,
